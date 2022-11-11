@@ -1,0 +1,54 @@
+<app-student-count [all]="getTotalStudentsCount()"
+[male]="getMaleStudentsCount()"
+[female]="getFemaleStudentsCount()"
+(countRadioButtonSelectionChanged)="onStudentCountRadioButtonChange($event)">
+</app-student-count>
+<br/><br/>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Course Fee</th>
+            <th>Index</th>
+            <th>Even</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let student of students; trackBy:trackByStudentID">
+            <tr *ngIf="selectedStudentCountRadioButton=='All' ||
+            selectedStudentCountRadioButton==student.Gender">           
+            <td>{{student.ID|uppercase}}</td>
+            <td>{{student.FirstName}}</td>
+            <td>{{student.Gender}}</td>      
+            <td>{{student.DOB}}</td>
+            <td>{{student.CourseFee | currency:'USD':true:'1.2-2'}}</td>          
+        </tr>
+        </ng-container>
+        <tr *ngIf="!students || students.length==0">
+            <td colspan="10">
+                No Students to display
+            </td>
+        </tr>        
+    </tbody>
+  </table>
+  <button [ngStyle] ="{'color':'red',  'font-weight': 'bold', 'font-size.px':20}" (click)='getStudents()'>Refresh Students</button>
+<br><br>
+  <select (change)="SetDropDownValue($event)">
+    <option value="">Select</option>
+    <option value="In">In</option>
+        <option value="Us">Us</option>
+            <option value="Uk">Uk</option>
+              </select>
+
+              <div [ngSwitch]="dropdownvalue">
+                <h3 *ngSwitchCase="'In'">India</h3>
+                <h3 *ngSwitchCase="'Us'">United State</h3>
+                <h3 *ngSwitchCase="'Uk'">United kingdom</h3>
+                <h3 *ngSwitchDefault="">You have not selected any country</h3>
+            </div>
+              
+
+
